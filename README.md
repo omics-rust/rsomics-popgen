@@ -6,9 +6,12 @@ shares compact allele counts across diversity, SFS and FST, and exports complete
 reports with explicit filtering, accessibility and estimator provenance.
 
 The implementation has accepted four-native-platform and full-chr22
-correctness/performance evidence. This delivery revision still needs its own
-package/native CI; publication and release assets are not claimed here.
-It is not a complete scikit-allel or vcftools replacement.
+correctness/performance evidence. Owning-repository
+[CI](https://github.com/omics-rust/rsomics-popgen/actions/workflows/ci.yml)
+verifies source packages and native delivery candidates on all four platforms;
+[Releases](https://github.com/omics-rust/rsomics-popgen/releases) lists published
+assets. Registry publication is reported separately. This is not a complete
+scikit-allel or vcftools replacement.
 
 ## Install from source
 

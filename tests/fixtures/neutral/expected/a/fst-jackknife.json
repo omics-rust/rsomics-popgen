@@ -1,0 +1,40 @@
+{
+  "block_size": 3,
+  "hudson": {
+    "point": 0.4476190476190476,
+    "se": 0.0773277732025985,
+    "vb": [
+      0.5087719298245613,
+      0.375,
+      "NaN"
+    ],
+    "vj": [
+      0.375,
+      0.5087719298245613,
+      0.4476190476190476
+    ]
+  },
+  "jackknife_rows": 9,
+  "point_rows": 9,
+  "profile": "source variant-count block jackknife; all-row point estimate; incomplete residual tail excluded from resampling; not demographic confidence interval",
+  "residual_tail_index_range": [
+    9,
+    9
+  ],
+  "residual_tail_ordinals": [],
+  "residual_tail_rows": 0,
+  "weir_cockerham": {
+    "point": 0.4245283018867925,
+    "se": 0.12724931419145522,
+    "vb": [
+      0.5263157894736842,
+      0.3061224489795918,
+      "NaN"
+    ],
+    "vj": [
+      0.3061224489795918,
+      0.5263157894736842,
+      0.4245283018867924
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "accessible_bp": 29,
+  "ancestral_status_counts": {
+    "allele_mismatch": 1,
+    "matched": 6,
+    "missing": 1,
+    "non_nucleotide": 1
+  },
+  "between": {
+    "dxy": 0.15086206896551724,
+    "fixed_density": 0.034482758620689655,
+    "fixed_differences": 1,
+    "hudson_den_sum": 4.375,
+    "hudson_num_sum": 1.9583333333333333,
+    "wc_a_sum": 1.875,
+    "wc_b_sum": -0.04166666666666663,
+    "wc_c_sum": 2.583333333333333
+  },
+  "chrom": "a",
+  "denominator": "project accessibility, not individual callability",
+  "populations": {
+    "CEU": {
+      "called_AN_min": 0,
+      "mpd_sum_fill0": 2.5,
+      "n_max": 4,
+      "no_pair_sites": 1,
+      "pi": 0.08620689655172414,
+      "segregating_sites": 5,
+      "tajima_d": -0.7968438738940975,
+      "theta": 0.09404388714733543,
+      "theta_tajima_n_policy": "source n=max(called AN); no imputed invariant genotypes"
+    },
+    "YRI": {
+      "called_AN_min": 0,
+      "mpd_sum_fill0": 2.3333333333333335,
+      "n_max": 4,
+      "no_pair_sites": 1,
+      "pi": 0.08045977011494253,
+      "segregating_sites": 4,
+      "tajima_d": 0.650102494825884,
+      "theta": 0.07523510971786834,
+      "theta_tajima_n_policy": "source n=max(called AN); no imputed invariant genotypes"
+    }
+  },
+  "records": 9,
+  "start": 1,
+  "stop": 31
+}

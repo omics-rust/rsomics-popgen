@@ -1,0 +1,27 @@
+##fileformat=VCFv4.2
+##contig=<ID=a,length=31>
+##contig=<ID=b,length=23>
+##FILTER=<ID=PASS,Description="Passed">
+##FILTER=<ID=q10,Description="Low quality">
+##INFO=<ID=AA,Number=1,Type=String,Description="Inferred ancestral allele">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Depth">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	Y1	C1	Y2	C2
+a	2	v0	A	T	.	PASS	AA=A|||	GT:DP	0/0:10	1/1:10	0/0:10	1/1:10
+a	4	v1	A	T	.	PASS	AA=t|||	GT:DP	0/1:10	0/0:10	1/1:10	0/1:10
+a	7	v2	A	C,G	.	PASS	AA=G|||	GT:DP	0/2:10	1/2:10	0/1:10	1/1:10
+a	10	v3	A	T	.	PASS	AA=A|||	GT:DP	0/1:10	0/1:10	0/1:10	0/1:10
+a	11	v4	A	T	.	PASS	AA=A|||	GT:DP	0/1:10	0/1:10	0/1:10	0/1:10
+a	14	v5	A	AT	.	PASS	AA=A|||	GT:DP	0/1:10	0/1:10	0/1:10	0/1:10
+a	15	v6	A	T	.	q10	AA=A|||	GT:DP	0/1:10	0/1:10	0/1:10	0/1:10
+a	18	v7	A	T	.	PASS	AA=N|||	GT:DP	0/0:10	0/1:10	0/1:10	1/1:10
+a	19	v8	A	T	.	PASS	AA=G|||	GT:DP	0/1:10	0/1:10	1/1:10	0/0:10
+a	20	v9	A	T	.	PASS	AA=.	GT:DP	./.:10	0/1:10	1/1:10	0/0:10
+a	22	v10	A	T	.	PASS	AA=A|||	GT:DP	./.:10	./.:10	./.:10	./.:10
+a	25	v11	A	T	.	PASS	AA=A|||	GT:DP	0/0:10	0/0:10	0/0:10	0/0:10
+a	27	v12	A	T	.	PASS	AA=T|||	GT:DP	1/1:10	1/1:10	1/1:10	1/1:10
+a	31	v13	A	C,G,T,<DEL>	.	PASS	AA=A|||	GT:DP	0/4:10	0/4:10	0/4:10	0/4:10
+b	2	v14	A	T	.	PASS	AA=A|||	GT:DP	0/0:10	0/1:10	0/1:10	1/1:10
+b	4	v15	A	T	.	PASS	AA=T|||	GT:DP	0/1:10	1/1:10	1/1:10	0/1:10
+b	5	v16	A	T	.	PASS	AA=.	GT:DP	1/1:10	0/0:10	1/1:10	0/0:10
+b	9	v17	A	T	.	PASS	AA=A|||	GT:DP	0/1:10	0/1:10	0/0:10	1/1:10

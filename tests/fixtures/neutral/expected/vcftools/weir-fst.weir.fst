@@ -1,0 +1,11 @@
+CHROM	POS	WEIR_AND_COCKERHAM_FST
+a	2	1
+a	4	0.2
+a	18	0.2
+a	19	0.2
+a	25	-nan
+a	27	-nan
+b	2	0.2
+b	4	-0.333333
+b	5	1
+b	9	0.2

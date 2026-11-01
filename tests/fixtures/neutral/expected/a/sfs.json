@@ -1,0 +1,119 @@
+{
+  "chromosome_counts": {
+    "CEU": 4,
+    "YRI": 4
+  },
+  "joint": {
+    "eligibility": {
+      "folded": 6,
+      "incomplete_biallelic": 2,
+      "unfolded": 4,
+      "unusable_ancestral_complete": 2
+    },
+    "folded": [
+      [
+        3,
+        0,
+        0
+      ],
+      [
+        0,
+        3,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "populations": [
+      "YRI",
+      "CEU"
+    ],
+    "unfolded": [
+      [
+        2,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "populations": {
+    "CEU": {
+      "eligibility": {
+        "biallelic": 8,
+        "folded": 7,
+        "incomplete_biallelic": 1,
+        "retained": 9,
+        "unfolded": 4,
+        "unusable_ancestral_complete": 3
+      },
+      "folded": [
+        3,
+        4,
+        0
+      ],
+      "unfolded": [
+        2,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    "YRI": {
+      "eligibility": {
+        "biallelic": 8,
+        "folded": 6,
+        "incomplete_biallelic": 2,
+        "retained": 9,
+        "unfolded": 4,
+        "unusable_ancestral_complete": 2
+      },
+      "folded": [
+        3,
+        3,
+        0
+      ],
+      "unfolded": [
+        3,
+        1,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "profile": "supplied eligible VCF rows only; no projection; no invented invariant bin0; independently folded marginal minor counts"
+}

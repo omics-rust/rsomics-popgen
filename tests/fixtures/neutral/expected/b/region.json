@@ -1,0 +1,46 @@
+{
+  "accessible_bp": 10,
+  "ancestral_status_counts": {
+    "matched": 3,
+    "missing": 1
+  },
+  "between": {
+    "dxy": 0.2625,
+    "fixed_density": 0.1,
+    "fixed_differences": 1,
+    "hudson_den_sum": 2.625,
+    "hudson_num_sum": 1.125,
+    "wc_a_sum": 1.125,
+    "wc_b_sum": 0.0,
+    "wc_c_sum": 1.5
+  },
+  "chrom": "b",
+  "denominator": "project accessibility, not individual callability",
+  "populations": {
+    "CEU": {
+      "called_AN_min": 4,
+      "mpd_sum_fill0": 1.5,
+      "n_max": 4,
+      "no_pair_sites": 0,
+      "pi": 0.15,
+      "segregating_sites": 3,
+      "tajima_d": -0.7544510776527732,
+      "theta": 0.16363636363636364,
+      "theta_tajima_n_policy": "source n=max(called AN); no imputed invariant genotypes"
+    },
+    "YRI": {
+      "called_AN_min": 4,
+      "mpd_sum_fill0": 1.5,
+      "n_max": 4,
+      "no_pair_sites": 0,
+      "pi": 0.15,
+      "segregating_sites": 3,
+      "tajima_d": -0.7544510776527732,
+      "theta": 0.16363636363636364,
+      "theta_tajima_n_policy": "source n=max(called AN); no imputed invariant genotypes"
+    }
+  },
+  "records": 4,
+  "start": 1,
+  "stop": 23
+}

@@ -1,0 +1,118 @@
+{
+  "aa_headers": [
+    "##INFO=<ID=AA,Number=1,Type=String,Description=\"Inferred ancestral allele\">"
+  ],
+  "admission_io": "full schema/GT scan and file hashing outside both future timers; timed source/native still reread original VCF",
+  "contigs": {
+    "a": {
+      "accessible_bp": 29,
+      "length": 31,
+      "mask_codes": {
+        "P": 29,
+        "Q": 2
+      },
+      "rows": 14
+    },
+    "b": {
+      "accessible_bp": 10,
+      "length": 23,
+      "mask_codes": {
+        "P": 10,
+        "Q": 13
+      },
+      "rows": 4
+    }
+  },
+  "files": {
+    "mask_a": {
+      "filename": "a.mask.fa",
+      "sha256": "e4e320a47d5e33902671f1739cf2535e8149c6988b702ffecaaf21ab3f2ba085",
+      "size": 35
+    },
+    "mask_b": {
+      "filename": "b.mask.fa",
+      "sha256": "e86eed224b7f430933faf8e10d0032ac65b011383534404e0d582c9ca5c27a91",
+      "size": 27
+    },
+    "panel": {
+      "filename": "panel.tsv",
+      "sha256": "de955a296cbe0aa7cbe12b9ef01c5978f0fcacfa7f487a5b4312f5a49986b442",
+      "size": 96
+    },
+    "reference_fai": {
+      "filename": "reference.fai",
+      "sha256": "ef53b815f0f3fb2972beed77e8e387604abe8da956c19dddfc02170052cc20ee",
+      "size": 26
+    },
+    "vcf": {
+      "filename": "casebook.vcf",
+      "sha256": "6cf788846360afef3d27e254642ac3e0abe92ef1bf09c18ee44cf4ed36ffab8d",
+      "size": 1516
+    }
+  },
+  "filter_counts": {
+    "inaccessible": 2,
+    "not_literal_snv": 2,
+    "not_pass": 1,
+    "retained": 13
+  },
+  "gt_identity_profile": "all original rows; selected sample order; signed int16 little-endian row/sample/ploidy bytes; phase omitted; original bytes retained",
+  "gt_shape": [
+    18,
+    4,
+    2
+  ],
+  "legacy": {
+    "files": {
+      "CEU.txt": {
+        "sha256": "cb477dddc15de845721433ab47f40f8efbc10ea6317e7fd90556e929dfb86e72",
+        "size": 6
+      },
+      "YRI.txt": {
+        "sha256": "065d70b9fecd0ac5d1cbc139c6f131f14ba0835568267f53d549f7c947e1e27f",
+        "size": 6
+      },
+      "eligible.vcf": {
+        "sha256": "08317c9f89656e4c51190e2b9821dd5bb489a0843d6faaac0e071bf82cc25914",
+        "size": 1018
+      }
+    },
+    "input_gt_stream_sha256": "484ff40595a33750b18975abb1ff3ffd3f3208bf51c4935888b1953669f15694",
+    "original_record_profile": "PASS P-accessible literal biallelic SNV; both populations complete; original fields and GT preserved",
+    "records": 10,
+    "root": "/__w/_temp/popgen-source-vz4clvy9/private/casebook-legacy-inputs"
+  },
+  "max_alt_number": 4,
+  "original_samples": 4,
+  "population_indices": {
+    "CEU": [
+      1,
+      3
+    ],
+    "YRI": [
+      0,
+      2
+    ]
+  },
+  "population_order": [
+    "YRI",
+    "CEU"
+  ],
+  "profile": "engineering-casebook-not-real-performance",
+  "record_stream_sha256": "7283a14bf58682a96afa68cd75accbafad2e79d0cd0f9628f651945a3e9e31b6",
+  "sample_ids": [
+    "Y1",
+    "C1",
+    "Y2",
+    "C2"
+  ],
+  "sample_indices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "schema": 1,
+  "selected_gt_stream_sha256": "484ff40595a33750b18975abb1ff3ffd3f3208bf51c4935888b1953669f15694",
+  "specification_sha256": "8c9f37a046f194195fd3fb1918ff152708825fa6f7c4c498547030a60ef78b0f"
+}

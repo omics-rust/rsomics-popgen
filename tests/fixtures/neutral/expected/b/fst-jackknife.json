@@ -1,0 +1,34 @@
+{
+  "block_size": 3,
+  "hudson": {
+    "point": 0.42857142857142855,
+    "se": "NaN",
+    "vb": [
+      0.5
+    ],
+    "vj": [
+      "NaN"
+    ]
+  },
+  "jackknife_rows": 3,
+  "point_rows": 4,
+  "profile": "source variant-count block jackknife; all-row point estimate; incomplete residual tail excluded from resampling; not demographic confidence interval",
+  "residual_tail_index_range": [
+    3,
+    4
+  ],
+  "residual_tail_ordinals": [
+    17
+  ],
+  "residual_tail_rows": 1,
+  "weir_cockerham": {
+    "point": 0.42857142857142855,
+    "se": "NaN",
+    "vb": [
+      0.5
+    ],
+    "vj": [
+      "NaN"
+    ]
+  }
+}

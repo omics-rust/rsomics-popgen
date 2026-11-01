@@ -1,0 +1,19 @@
+[
+  "a/fst-jackknife.json",
+  "a/jackknife-membership.tsv.gz",
+  "a/region.json",
+  "a/sfs.json",
+  "a/sites.tsv.gz",
+  "a/windows.tsv.gz",
+  "b/fst-jackknife.json",
+  "b/jackknife-membership.tsv.gz",
+  "b/region.json",
+  "b/sfs.json",
+  "b/sites.tsv.gz",
+  "b/windows.tsv.gz",
+  "vcftools/site-pi.sites.pi",
+  "vcftools/tajima-d.Tajima.D",
+  "vcftools/weir-fst.weir.fst",
+  "vcftools/window-pi.windowed.pi",
+  "vcftools/window-weir-fst.windowed.weir.fst"
+]

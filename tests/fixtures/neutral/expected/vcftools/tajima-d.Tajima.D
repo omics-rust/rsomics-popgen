@@ -1,0 +1,5 @@
+CHROM	BIN_START	N_SNPS	TajimaD
+a	0	2	1.79366
+a	10	2	1.79366
+a	20	0	nan
+b	0	4	1.69719

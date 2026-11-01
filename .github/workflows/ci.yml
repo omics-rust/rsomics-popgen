@@ -1,0 +1,179 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  native:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: linux-x86_64
+            runner: ubuntu-24.04
+            host: x86_64-unknown-linux-gnu
+          - target: linux-aarch64
+            runner: ubuntu-24.04-arm
+            host: aarch64-unknown-linux-gnu
+          - target: macos-x86_64
+            runner: macos-15-intel
+            host: x86_64-apple-darwin
+          - target: macos-aarch64
+            runner: macos-15
+            host: aarch64-apple-darwin
+    env:
+      CARGO_HOME: ${{ runner.temp }}/cargo-home
+      CARGO_TARGET_DIR: ${{ runner.temp }}/cargo-target
+      RUSTUP_HOME: ${{ runner.temp }}/rustup-home
+      TMPDIR: ${{ runner.temp }}/tmp
+      XDG_CACHE_HOME: ${{ runner.temp }}/cache
+      CARGO_BUILD_JOBS: "2"
+      PYTHONDONTWRITEBYTECODE: "1"
+      NATIVE_TARGET: ${{ matrix.target }}
+      EXPECTED_HOST: ${{ matrix.host }}
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Initialize task paths
+        run: mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$XDG_CACHE_HOME"
+
+      - uses: dtolnay/rust-toolchain@1.91.0
+        with:
+          components: clippy,rustfmt
+
+      - name: Verify native compiler host
+        run: |
+          set -euo pipefail
+          rustc -vV
+          test "$(rustc -vV | sed -n 's/^host: //p')" = "$EXPECTED_HOST"
+
+      - name: Format and strict Clippy
+        if: matrix.target == 'linux-x86_64'
+        run: |
+          cargo fmt --all -- --check
+          cargo clippy --locked --all-targets --all-features -- -D warnings
+
+      - name: Test debug
+        run: cargo test --locked --all-targets --all-features
+
+      - name: Check documentation
+        if: matrix.target == 'linux-x86_64'
+        env:
+          RUSTDOCFLAGS: -D warnings
+        run: cargo doc --locked --no-deps --all-features
+
+      - name: Verify complete source package
+        run: |
+          set -euo pipefail
+          cargo metadata --locked --no-deps --format-version 1 > "$RUNNER_TEMP/package-metadata.json"
+          cargo package --locked --list > "$RUNNER_TEMP/package-files.txt"
+          cargo package --locked
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, subprocess, tarfile
+          root = pathlib.Path.cwd()
+          metadata = json.loads((pathlib.Path(os.environ['RUNNER_TEMP']) / 'package-metadata.json').read_bytes())
+          package, = [p for p in metadata['packages'] if p['name'] == 'rsomics-popgen']
+          prefix = package['name'] + '-' + package['version']
+          source = pathlib.Path(os.environ['CARGO_TARGET_DIR']) / 'package' / (prefix + '.crate')
+          expected = set(subprocess.check_output(['git', 'ls-files', '-z', '--', 'Cargo.toml', 'Cargo.lock', 'README.md', 'LICENSE-MIT', 'LICENSE-APACHE-2.0', 'THIRD_PARTY.md', 'src', 'tests', 'docs/neutral-analysis.md']).decode().rstrip('\0').split('\0'))
+          destination = pathlib.Path(os.environ['RUNNER_TEMP']) / 'packaged-source'
+          with tarfile.open(source, 'r:gz') as archive:
+              members = archive.getmembers()
+              names = [m.name for m in members]
+              assert len(names) == len(set(names))
+              regular = {}
+              for member in members:
+                  path = pathlib.PurePosixPath(member.name)
+                  assert not path.is_absolute() and '..' not in path.parts and path.parts[0] == prefix
+                  assert member.isfile() or member.isdir()
+                  if member.isfile():
+                      relative = '/'.join(path.parts[1:])
+                      assert relative
+                      regular[relative] = archive.extractfile(member).read()
+              assert set(regular) == expected | {'Cargo.toml.orig', '.cargo_vcs_info.json'}
+              assert regular['Cargo.toml.orig'] == (root / 'Cargo.toml').read_bytes()
+              assert json.loads(regular['.cargo_vcs_info.json'])['git']['sha1'] == os.environ['GITHUB_SHA']
+              for name in expected - {'Cargo.toml'}:
+                  assert regular[name] == (root / name).read_bytes(), name
+              for name, body in regular.items():
+                  target = destination / prefix / name
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  target.write_bytes(body)
+          with pathlib.Path(os.environ['GITHUB_ENV']).open('a') as stream:
+              stream.write('PACKAGE_DIRECTORY=' + str(destination / prefix) + '\n')
+              stream.write('PACKAGE_VERSION=' + package['version'] + '\n')
+          print(json.dumps(dict(package=str(source), members=len(regular), sha256=hashlib.sha256(source.read_bytes()).hexdigest(), original_bodies_match=True)))
+          PY
+
+      - name: Test packaged release
+        run: cargo test --manifest-path "$PACKAGE_DIRECTORY/Cargo.toml" --release --locked --all-targets --all-features
+
+      - name: Install and exercise packaged binary
+        run: |
+          set -euo pipefail
+          cargo install --path "$PACKAGE_DIRECTORY" --locked --root "$RUNNER_TEMP/installed"
+          "$RUNNER_TEMP/installed/bin/rsomics-popgen" --version
+          "$RUNNER_TEMP/installed/bin/rsomics-popgen" --help
+
+      - name: Assemble native delivery candidate
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, shutil, subprocess, tarfile
+          root = pathlib.Path.cwd()
+          temporary = pathlib.Path(os.environ['RUNNER_TEMP'])
+          version, target = os.environ['PACKAGE_VERSION'], os.environ['NATIVE_TARGET']
+          stem = 'rsomics-popgen-' + version + '-' + target
+          delivery = temporary / 'delivery'
+          bundle = delivery / stem
+          bundle.mkdir(parents=True)
+          binary = temporary / 'installed/bin/rsomics-popgen'
+          shutil.copy2(binary, bundle / binary.name)
+          for name in ('README.md', 'LICENSE-MIT', 'LICENSE-APACHE-2.0', 'THIRD_PARTY.md', 'docs/neutral-analysis.md'):
+              destination = bundle / name
+              destination.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copy2(root / name, destination)
+          sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+          provenance = dict(product='rsomics-popgen', version=version, target=target,
+              head_sha=os.environ['GITHUB_SHA'], run_id=int(os.environ['GITHUB_RUN_ID']),
+              run_attempt=int(os.environ['GITHUB_RUN_ATTEMPT']), native_host=os.environ['EXPECTED_HOST'],
+              rustc=subprocess.check_output(['rustc', '-vV'], text=True),
+              binary=dict(bytes=binary.stat().st_size, sha256=sha(binary)),
+              lock_sha256=sha(root / 'Cargo.lock'),
+              historical_scientific_owner='ff8e951344b5cd8f8c049c96afa9e2c585d14995',
+              historical_performance_run=41272268312, this_binary_remeasured=False,
+              publication=False, signed_release=False)
+          (bundle / 'BUILD.json').write_text(json.dumps(provenance, indent=2, sort_keys=True) + '\n')
+          archive = delivery / (stem + '.tar.gz')
+          with tarfile.open(archive, 'w:gz') as output:
+              output.add(bundle, arcname=stem)
+          source = pathlib.Path(os.environ['CARGO_TARGET_DIR']) / 'package' / ('rsomics-popgen-' + version + '.crate')
+          shutil.copy2(source, delivery / source.name)
+          (delivery / 'SHA256SUMS').write_text(''.join(sha(path) + '  ' + path.name + '\n' for path in (archive, delivery / source.name)))
+          print(json.dumps(provenance, indent=2, sort_keys=True))
+          PY
+
+      - name: Upload native and source candidates
+        uses: actions/upload-artifact@v4
+        with:
+          name: rsomics-popgen-${{ matrix.target }}-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/delivery/*.tar.gz
+            ${{ runner.temp }}/delivery/*.crate
+            ${{ runner.temp }}/delivery/SHA256SUMS
+          if-no-files-found: error
+          retention-days: 30

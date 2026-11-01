@@ -3,10 +3,21 @@ name = "rsomics-popgen"
 version = "0.1.0"
 edition = "2024"
 rust-version = "1.91"
-publish = false
 description = "Connected neutral variation and population differentiation analysis"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/omics-rust/rsomics-popgen"
+readme = "README.md"
+include = [
+    "Cargo.toml",
+    "Cargo.lock",
+    "README.md",
+    "LICENSE-MIT",
+    "LICENSE-APACHE-2.0",
+    "THIRD_PARTY.md",
+    "docs/neutral-analysis.md",
+    "src/**",
+    "tests/**",
+]
 
 [dependencies]
 clap = { version = "4", features = ["derive"] }
